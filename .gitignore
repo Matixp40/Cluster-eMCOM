@@ -21,4 +21,5 @@ var/
 *.pot
 
 db.sqlite3
-.idea/
+.idea/:wq
+
