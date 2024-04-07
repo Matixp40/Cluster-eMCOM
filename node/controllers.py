@@ -16,12 +16,16 @@ def create_node_controller(payload: NodeIn) -> Node:
     node = Node(**payload.dict())
     node.full_clean()
     node.save()
+    print(node)
     return node
 
 
 def update_node_controller(payload: NodeIn, node_id: int) -> Node:
     node = get_object_or_404(Node, id=node_id)
     for attr, value in payload.dict().items():
+        if value is None:
+            continue
+
         setattr(node, attr, value)
 
     node.save()

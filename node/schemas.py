@@ -7,7 +7,7 @@ class NodeIn(ModelSchema):
     class Meta:
         model = Node
         fields = ['node_name', 'qth_locator', 'last_seen']
-        fields_optional = ['qth_locator', 'last_seen']
+        fields_optional = ['node_name', 'qth_locator', 'last_seen']
 
 
 class NodeOut(ModelSchema):
