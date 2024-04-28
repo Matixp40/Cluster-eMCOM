@@ -19,17 +19,17 @@ def get_node(request, node_id: int):
     return get_node_controller(node_id)
 
 
-@router.post("")
+@router.post("", response={HTTPStatus.OK: NodeOut})
 def create_node(request, payload: NodeIn):
     return create_node_controller(payload)
 
 
-@router.put("{node_id}")
+@router.put("{node_id}", response={HTTPStatus.OK: NodeOut})
 def update_node(request, payload: NodeIn, node_id: int):
     return update_node_controller(payload, node_id)
 
 
-@router.delete("{node_id}")
+@router.delete("{node_id}/")
 def delete_node(request, node_id: int):
-    delete_node_controller()
-    return {"sucess": True}
+    delete_node_controller(node_id)
+    return {"success": True}
