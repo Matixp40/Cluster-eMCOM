@@ -21,11 +21,13 @@ class ConnectionTestCase(TestCase):
             content[0]['connection_name'] == test_connection.connection_name
         ), "Connection name should match"
 
-    def test_get_connection(self):
+    def test_post_connection(self, request):
+        
+    def test_get_connection(self, request):
         pass
 
-    def test_delete_connection(self):
+    def test_delete_connection(self, request):
         pass
 
-    def test_update_connection(self):
+    def test_update_connection(self, request):
         pass
