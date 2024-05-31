@@ -9,6 +9,64 @@ const mapContainerStyle = {
   height: '500px',
 };
 
+const ASCII_0 = 48;
+const ASCII_A = 65;
+const ASCII_a = 97;
+
+const squareToLocation = (qthLocator) => {
+    // Validate input
+    if (typeof qthLocator !== 'string') {
+        throw new Error('Input must be a string');
+    }
+    if (qthLocator.length < 4 || qthLocator.length > 8 || qthLocator.length % 2 !== 0) {
+        throw new Error('Invalid QTH locator length');
+    }
+
+    qthLocator = qthLocator.toUpperCase();
+
+    // Separate fields, squares and subsquares
+    // Fields
+    const lngField = qthLocator.charCodeAt(0) - ASCII_A;
+    const latField = qthLocator.charCodeAt(1) - ASCII_A;
+
+    // Squares
+    const lngSq = qthLocator.charCodeAt(2) - ASCII_0;
+    const latSq = qthLocator.charCodeAt(3) - ASCII_0;
+
+    // Subsquares
+    let lngSubSq = 0;
+    let latSubSq = 0;
+    if (qthLocator.length >= 6) {
+        lngSubSq = qthLocator.charCodeAt(4) - ASCII_A;
+        latSubSq = qthLocator.charCodeAt(5) - ASCII_A;
+    }
+
+    // Extended squares
+    let lngExtSq = 0;
+    let latExtSq = 0;
+    if (qthLocator.length === 8) {
+        lngExtSq = qthLocator.charCodeAt(6) - ASCII_0;
+        latExtSq = qthLocator.charCodeAt(7) - ASCII_0;
+    }
+
+    // Calculate latitude and longitude
+    let lng = -180.0;
+    let lat = -90.0;
+
+    lng += 20.0 * lngField;
+    lat += 10.0 * latField;
+
+    lng += 2.0 * lngSq;
+    lat += 1.0 * latSq;
+
+    lng += 5.0 / 60 * lngSubSq;
+    lat += 2.5 / 60 * latSubSq;
+
+    lng += 0.5 / 60 * lngExtSq;
+    lat += 0.25 / 60 * latExtSq;
+
+    return { lat, lng };
+}
 // Mock function to get coordinates
 const getCoordinates = (location) => {
   switch(location.toLowerCase()) {
@@ -31,8 +89,10 @@ export default function App() {
   const [coordinates2, setCoordinates2] = useState(null);
   const [coordinates3, setCoordinates3] = useState(null);
 
+  var locator = 'KN19JS';
+
   const updateCoordinates = () => {
-    setCoordinates1(getCoordinates(location1));
+    setCoordinates1(squareToLocation(locator));
     setCoordinates2(getCoordinates(location2));
     setCoordinates3(getCoordinates(location3));
   };
