@@ -24,17 +24,17 @@ def get_connection(request, connection_id: int):
     return get_connection_controller(connection_id)
 
 
-@router.post("")
+@router.post("", response={HTTPStatus.CREATED: ConnectionOut})
 def create_connection(request, payload: ConnectionIn):
     return create_connection_controller(payload)
 
 
-@router.put("{connection_id}")
+@router.put("{connection_id}/", response={HTTPStatus.OK: ConnectionOut})
 def update_connection(request, connection_id: int, payload: ConnectionIn):
-    return update_connection_controller(connection_id, payload)
+    return update_connection_controller(payload, connection_id)
 
 
-@router.delete("{connection_id}")
+@router.delete("{connection_id}/")
 def delete_connection(request, connection_id: int):
     delete_connection_controller(connection_id)
     return {"success": True}
