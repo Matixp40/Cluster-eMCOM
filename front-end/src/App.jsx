@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { TextField, Button, Container, Typography, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 const mapContainerStyle = {
   width: '100%',
   height: '500px',
 };
 
+const API_URL = 'http://127.0.0.1:8000/'
+
 const ASCII_0 = 48;
 const ASCII_A = 65;
 const ASCII_a = 97;
 
+const addNode = (nodeName, qthLocator) => {
+
+  fetch(API_URL + "api/node/", {
+    method: 'POST',
+    body: JSON.stringify({
+      node_name: nodeName,
+      qth_locator: qthLocator,
+      last_seen: "2024-05-31T21:30:12.333Z"
+    }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+}
 const squareToLocation = (qthLocator) => {
     // Validate input
     if (typeof qthLocator !== 'string') {
@@ -23,7 +43,6 @@ const squareToLocation = (qthLocator) => {
     }
 
     qthLocator = qthLocator.toUpperCase();
-
     // Separate fields, squares and subsquares
     // Fields
     const lngField = qthLocator.charCodeAt(0) - ASCII_A;
@@ -67,7 +86,6 @@ const squareToLocation = (qthLocator) => {
 
     return { lat, lng };
 }
-// Mock function to get coordinates
 const getCoordinates = (location) => {
   switch(location.toLowerCase()) {
     case 'san francisco':
@@ -84,17 +102,25 @@ const getCoordinates = (location) => {
 export default function App() {
   const [location1, setLocation1] = useState('');
   const [location2, setLocation2] = useState('');
-  const [location3, setLocation3] = useState('');
   const [coordinates1, setCoordinates1] = useState(null);
   const [coordinates2, setCoordinates2] = useState(null);
-  const [coordinates3, setCoordinates3] = useState(null);
+  const [nodes, setNodes] = useState([]);
 
   var locator = 'KN19JS';
+
+
+  useEffect(() => {
+    fetch(API_URL+ 'api/node/')
+    .then((response) => {
+        return response.json()
+      })
+    .then((data) => setNodes(data))
+
+  }, [])
 
   const updateCoordinates = () => {
     setCoordinates1(squareToLocation(locator));
     setCoordinates2(getCoordinates(location2));
-    setCoordinates3(getCoordinates(location3));
   };
 
   const theme = useTheme();
@@ -129,15 +155,6 @@ export default function App() {
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            label="Location 3"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={location3}
-            onChange={(e) => setLocation3(e.target.value)}
-            InputProps={{ style: { backgroundColor: 'white' } }}
-          />
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" color="primary" fullWidth onClick={updateCoordinates}>
@@ -147,9 +164,11 @@ export default function App() {
         <Grid item xs={12}>
           <LoadScript googleMapsApiKey="AIzaSyBjuVvNBPR-pgZJumCgW7ABOIsABTrvq1Y">
             <GoogleMap mapContainerStyle={mapContainerStyle} center={{ lat: 37.7749, lng: -122.4194 }} zoom={5}>
+                {nodes.map((node) => {
+                    <Marker>node.node_name</Marker>
+                })}
               {coordinates1 && <Marker position={coordinates1} label="1" />}
               {coordinates2 && <Marker position={coordinates2} label="2" />}
-              {coordinates3 && <Marker position={coordinates3} label="3" />}
             </GoogleMap>
           </LoadScript>
         </Grid>
