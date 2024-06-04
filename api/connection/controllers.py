@@ -1,11 +1,34 @@
 from django.shortcuts import get_object_or_404
 
 from connection.models import Connection
-from connection.schemas import ConnectionIn, ConnectionOut
+from connection.schemas import ConnectionIn, ConnectionsOut
+from node.models import Node
 
 
-def list_connections_controller() -> list[ConnectionOut]:
-    return Connection.objects.all()
+def list_connections_controller() -> list[ConnectionsOut]:
+    objects = Connection.objects.all()
+    response = []
+    for i in objects:
+        logged_by_name = Node.objects.get(pk=i.logged_by.id).node_name
+        caller_by_name = Node.objects.get(pk=i.logged_by.id).node_name
+        called_by_name = Node.objects.get(pk=i.logged_by.id).node_name
+        response.append(
+            {
+                "id": i.id,
+                "caller": i.caller.id,
+                "frequency": i.frequency,
+                "logged_by": i.logged_by.id,
+                "called": i.called.id,
+                "connection_type": i.connection_type,
+                "logged_by_name": logged_by_name,
+                "called_name": called_by_name,
+                "caller_name": caller_by_name,
+                "created": str(i.created),
+                "updated": str(i.updated)
+            }
+        )
+
+        return response
 
 
 def get_connection_controller(connection_id: int) -> Connection:
