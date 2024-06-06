@@ -26,5 +26,6 @@ class ConnectionsOut(Schema):
     called: int
     called_name: str
     connection_type: str
+    caller_name: str
     created: str
     updated: str
