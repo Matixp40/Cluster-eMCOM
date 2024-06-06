@@ -2,9 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Stations from "./pages/Stations.jsx";
 import Node from "./pages/Node.jsx"
-import "./App.css"
 import AddStation from "./components/AddStation.jsx";
-import AddConnection from "./components/AddConnection.jsx";
 
 const App = () => {
     return (

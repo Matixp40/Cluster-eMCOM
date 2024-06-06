@@ -20,7 +20,8 @@ const AddStation = () => {
             .then(data => console.log(data))
     }
     return (
-        <div>
+        <div className="form-container">
+            <b>Add Station</b>
             <label>
                 Station callsign
                 <input
@@ -35,9 +36,7 @@ const AddStation = () => {
                     onChange={e => setQthLocator(e.target.value)}
                 />
             </label>
-            <label>
-                <button onClick={sendData} name="Send">Send</button>
-            </label>
+            <button onClick={sendData} name="Send">Send</button>
         </div>
     )
 }

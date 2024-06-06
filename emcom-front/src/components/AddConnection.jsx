@@ -26,7 +26,7 @@ const AddConnection = () => {
             .then(data => console.log(data))
     }
     return (
-        <div>
+        <div className="form-container">
             <label>
                 Caller
                 <input

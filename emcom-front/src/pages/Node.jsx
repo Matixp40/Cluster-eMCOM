@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 const API_URL = 'http://127.0.0.1:8000/'
@@ -18,9 +18,13 @@ const Node = () => {
 
     return (
         <>
+            <Link to="/">
+                Go home
+            </Link>
             <h1>
                 {node.node_name}
             </h1>
+            <p><b>id: </b>{node.id}</p>
             <p><b>QTH: </b> {node.qth_locator}</p>
             <p><b>Last seen: {node.last_seen}</b></p>
         </>

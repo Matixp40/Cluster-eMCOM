@@ -12,7 +12,7 @@ const RemoveConnection = () => {
             .then(data => console.log(data))
     }
     return (
-        <div>
+        <div className="form-container">
             <b>Remove station</b>
             <br/>
             <label>

@@ -24,6 +24,7 @@ const Stations = () => {
             <h1>Stations</h1>
             <table>
                 <tr>
+                    <th>ID</th>
                     <th>Caller</th>
                     <th>Called</th>
                     <th>Frequency</th>
@@ -32,6 +33,9 @@ const Stations = () => {
                 </tr>
                 {stations.map((x) => (
                     <tr key={x.id}>
+                        <td>
+                            {x.id}
+                        </td>
                         <td>
                             <Link to={"/stations/" + x.caller}>
                                 {x.caller_name}
@@ -53,8 +57,10 @@ const Stations = () => {
                     </tr>
                 ))}
             </table>
-            <AddConnection/>
-            <RemoveConnection/>
+            <div className="form-container">
+                <AddConnection/>
+                <RemoveConnection/>
+            </div>
         </>
     )
 }

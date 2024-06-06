@@ -1,6 +1,6 @@
 import {APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AddStation from "../components/AddStation.jsx";
 import RemoveStation from "../components/RemoveStation.jsx";
 
@@ -58,7 +58,7 @@ const squareToLocation = (qthLocator) => {
 }
 const Home = () => {
     const [nodes, setNodes] = useState([]);
-
+    const navigate = useNavigate()
     useEffect(() => {
         fetch(API_URL + 'api/node/')
             .then((response) => {
@@ -69,7 +69,7 @@ const Home = () => {
     }, []);
     return (
         <>
-            <div id="header">
+            <div id="navbar">
                 <h1>EmCom Cluster</h1>
                 <Link to="/stations">
                     Stations
@@ -88,7 +88,7 @@ const Home = () => {
                     disableDefaultUI={true}
                 >
                     {nodes.map((x) => (
-                        <Marker key={x.id} position={squareToLocation(x.qth_locator)}>{x.node_name}</Marker>
+                        <Marker key={x.id} onClick={() => navigate("/stations/" + x.id)} position={squareToLocation(x.qth_locator)}>{x.node_name}</Marker>
                     ))}
                 </Map>
             </APIProvider>
