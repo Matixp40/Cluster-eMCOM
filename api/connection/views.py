@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from typing import List
 
 from ninja import Router
 from connection.controllers import (
@@ -9,14 +8,15 @@ from connection.controllers import (
     update_connection_controller,
     delete_connection_controller,
 )
-from connection.schemas import ConnectionOut, ConnectionIn
+from connection.schemas import ConnectionOut, ConnectionIn, ConnectionsOut
 
 router = Router(tags=["Connections"])
 
 
-@router.get("", response={HTTPStatus.OK: List[ConnectionOut]})
+@router.get("", response={HTTPStatus.OK: list[ConnectionsOut]})
 def list_connections(request):
-    return list_connections_controller()
+    a = list_connections_controller()
+    return a
 
 
 @router.get("{connection_id}/", response={HTTPStatus.OK: ConnectionOut})
