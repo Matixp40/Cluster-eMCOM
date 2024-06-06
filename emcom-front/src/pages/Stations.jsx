@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import AddConnection from "../components/AddConnection.jsx";
+import RemoveConnection from "../components/RemoveConnection.jsx";
 
 const API_URL = 'http://127.0.0.1:8000/'
 
@@ -16,6 +18,9 @@ const Stations = () => {
     }, []);
     return (
         <>
+            <Link to={"/"}>
+                Go back home
+            </Link>
             <h1>Stations</h1>
             <table>
                 <tr>
@@ -48,6 +53,8 @@ const Stations = () => {
                     </tr>
                 ))}
             </table>
+            <AddConnection/>
+            <RemoveConnection/>
         </>
     )
 }

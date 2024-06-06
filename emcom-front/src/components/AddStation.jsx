@@ -36,7 +36,7 @@ const AddStation = () => {
                 />
             </label>
             <label>
-                <input type="button" onClick={sendData} name="Send"/>
+                <button onClick={sendData} name="Send">Send</button>
             </label>
         </div>
     )

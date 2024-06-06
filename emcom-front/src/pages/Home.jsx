@@ -1,6 +1,8 @@
 import {APIProvider, Map, Marker} from "@vis.gl/react-google-maps";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import AddStation from "../components/AddStation.jsx";
+import RemoveStation from "../components/RemoveStation.jsx";
 
 
 const API_URL = 'http://127.0.0.1:8000/'
@@ -72,18 +74,10 @@ const Home = () => {
                 <Link to="/stations">
                     Stations
                 </Link>
-                <Link to="/add-connection">
-                    Add Connection
-                </Link>
-                <Link to="/remove-connection">
-                    Remove Connection
-                </Link>
-                <Link to="/add-node">
-                    Add Node
-                </Link>
-                <Link to="/remove-node">
-                    Remove Node
-                </Link>
+                <div id="controls">
+                    <AddStation/>
+                    <RemoveStation/>
+                </div>
             </div>
             <APIProvider apiKey={"AIzaSyBjuVvNBPR-pgZJumCgW7ABOIsABTrvq1Y"}>
                 <Map
