@@ -14,7 +14,7 @@ const RemoveConnection = () => {
     return (
         <div className="form-container">
             <label>
-                Connection type
+                StationID
                 <input
                     value={id}
                     onChange={e => setId(e.target.value)}
